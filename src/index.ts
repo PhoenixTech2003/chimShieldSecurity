@@ -3,7 +3,7 @@ import { Hono } from "hono";
 import { auth } from "@/lib/auth";
 import { cors } from "hono/cors";
 import authRouter from "./routers/auth";
-import indexRouter from "./routers/indexRouter";
+import indexRouter from "./routers";
 import { serveStatic } from "@hono/node-server/serve-static";
 
 const app = new Hono<{
