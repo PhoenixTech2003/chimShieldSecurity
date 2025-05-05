@@ -2,14 +2,16 @@
   "name": "chimShieldSecurity",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/backend/index.ts",
+    "dev": "tsx watch src/index.ts ",
+    "tailwind": "tailwindcss -i ./src/assets/static/input.css -o ./src/assets/static/output.css --watch",
     "build": "tsc",
-    "start": "node dist/backend/index.js",
+    "start": "node dist/index.js",
     "dev:frontend": "vite serve ./src/frontend "
   },
   "dependencies": {
     "@hono/node-server": "^1.14.1",
     "@t3-oss/env-core": "^0.13.4",
+    "@tailwindcss/cli": "^4.1.5",
     "@tailwindcss/vite": "^4.1.5",
     "better-auth": "^1.2.7",
     "dotenv": "^16.5.0",
@@ -25,7 +27,6 @@
     "@types/pg": "^8.11.14",
     "drizzle-kit": "^0.31.1",
     "tsx": "^4.19.4",
-    "typescript": "^5.8.3",
-    "vite": "^6.3.4"
+    "typescript": "^5.8.3"
   }
 }

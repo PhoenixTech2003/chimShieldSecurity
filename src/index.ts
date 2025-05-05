@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import { cors } from "hono/cors";
 import authRouter from "./routers/auth";
 import indexRouter from "./routers/indexRouter";
+import { serveStatic } from "@hono/node-server/serve-static";
 
 const app = new Hono<{
   Variables: {
@@ -16,8 +17,10 @@ app.use(
   cors({
     origin: "http://localhost:5173", // remove trailing slash
     allowHeaders: [
-      "Content-Type", 
-      "Authorization", 
+      "Origin",
+      "Content-Type",
+      "Accept",
+      "Authorization",
       "HX-Request", 
       "HX-Trigger",
       "HX-Target",
@@ -36,6 +39,7 @@ app.use(
     credentials: true,
   })
 );
+
 app.use("*", async (c, next) => {
   const session = await auth.api.getSession({ headers: c.req.raw.headers });
 
@@ -49,6 +53,9 @@ app.use("*", async (c, next) => {
   c.set("session", session.session);
   return next();
 });
+
+// Serve static files from the backend assets directory
+app.use("/static/*", serveStatic({ root: "./src/assets" }));
 
 app.route("/v1/api", indexRouter);
 app.route("/v1/api/auth", authRouter);
