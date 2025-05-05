@@ -1,6 +1,6 @@
 import { html } from "hono/html";
-import { NavigationBar } from "../navBar";
-import { Footer } from "../footer";
+import { NavigationBar } from "../components/navBar";
+import { Footer } from "../components/footer";
 
 export const MainLayout = (props: { children: any }) => html` 
 <div>

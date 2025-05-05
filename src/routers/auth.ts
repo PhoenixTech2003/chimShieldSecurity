@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 import { SignUpInput } from "@/lib/types";
 import { auth } from "@/lib/auth";
-import { ErrorBox } from "../partials/error";
-import { SuccessBox } from "../partials/success";
+import { ErrorBox } from "../partials/components/error";
+import { SuccessBox } from "../partials/components/success";
 import { APIError } from "better-auth/api";
 import { SignInPage } from "../partials/auth/signInPage";
 
