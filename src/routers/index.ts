@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { LandingPage } from "../partials/landing-page/page";
-import { RootLayout } from "../partials/rootLayout";
+import { RootLayout } from "../partials/layouts/rootLayout";
 const indexRouter = new Hono();
 
 indexRouter.get("/", (c) => {
