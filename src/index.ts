@@ -62,6 +62,7 @@ app.route("/v1/api", indexRouter);
 app.route("/v1/api/auth", authRouter);
 app.route("/v1/api/admin", adminRouter);
 
+
 app.on(["GET", "POST"], "/api/auth/*", (c) => {
   return auth.handler(c.req.raw);
 });
