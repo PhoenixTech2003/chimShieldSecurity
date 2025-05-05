@@ -3,7 +3,8 @@ import { Hono } from "hono";
 import { auth } from "@/lib/auth";
 import { cors } from "hono/cors";
 import authRouter from "./routers/auth";
-import indexRouter from "./routers";
+import indexRouter from "./routers/index";
+import adminRouter from "./routers/admin";
 import { serveStatic } from "@hono/node-server/serve-static";
 
 const app = new Hono<{
@@ -59,6 +60,7 @@ app.use("/static/*", serveStatic({ root: "./src/assets" }));
 
 app.route("/v1/api", indexRouter);
 app.route("/v1/api/auth", authRouter);
+app.route("/v1/api/admin", adminRouter);
 
 app.on(["GET", "POST"], "/api/auth/*", (c) => {
   return auth.handler(c.req.raw);
