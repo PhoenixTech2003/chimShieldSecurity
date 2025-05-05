@@ -3,6 +3,7 @@ import { Hono } from "hono";
 import { auth } from "@/lib/auth";
 import { cors } from "hono/cors";
 import authRouter from "./routers/auth";
+import indexRouter from "./routers/indexRouter";
 
 const app = new Hono<{
   Variables: {
@@ -11,10 +12,24 @@ const app = new Hono<{
   };
 }>();
 app.use(
-  "/api/auth/*", // or replace with "*" to enable cors for all routes
+  "*", // or replace with "*" to enable cors for all routes
   cors({
-    origin: "http://localhost:3001", // replace with your origin
-    allowHeaders: ["Content-Type", "Authorization"],
+    origin: "http://localhost:5173", // remove trailing slash
+    allowHeaders: [
+      "Content-Type", 
+      "Authorization", 
+      "HX-Request", 
+      "HX-Trigger",
+      "HX-Target",
+      "HX-Current-URL", 
+      "HX-Swap", 
+      "HX-Indicator",
+      "HX-Prompt",
+      "HX-Boost",
+      "HX-History-Restore-Request",
+      "HX-Trigger-Name",
+      "HX-Boosted"
+    ],
     allowMethods: ["POST", "GET", "OPTIONS"],
     exposeHeaders: ["Content-Length"],
     maxAge: 600,
@@ -35,6 +50,9 @@ app.use("*", async (c, next) => {
   return next();
 });
 
+app.route("/v1/api", indexRouter);
+app.route("/v1/api/auth", authRouter);
+
 app.on(["GET", "POST"], "/api/auth/*", (c) => {
   return auth.handler(c.req.raw);
 });
@@ -43,7 +61,6 @@ app.get("/", (c) => {
   return c.text("Hello Hono!");
 });
 
-app.route("/auth", authRouter);
 serve(
   {
     fetch: app.fetch,

@@ -4,9 +4,12 @@ import { auth } from "@/lib/auth";
 import { ErrorBox } from "../partials/error";
 import { SuccessBox } from "../partials/success";
 import { APIError } from "better-auth/api";
+import { SignInPage } from "../partials/auth/signInPage";
 
 const authRouter = new Hono();
-
+authRouter.get("/sign-in", (c) => {
+    return c.html(SignInPage());
+})
 authRouter.post("/sign-up", async (c) => {
   try {
     const data = (await c.req.json()) as SignUpInput;
